@@ -12,13 +12,8 @@ spec:
       protocols: all
       anycastPrefix: jms.queue.
       verifyHost: false
-    - name: mqtt
-      protocols: mqtt
-      port: 8883
       sslEnabled: true
-      sslSecret: amq-mqtt-mqtt-secret
-      verifyHost: false
-      expose: true
+      sslSecret: amq-mqtt-all-secret
   adminPassword: admin
   deploymentPlan:
     size: 1

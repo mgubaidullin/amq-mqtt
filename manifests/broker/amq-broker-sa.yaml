@@ -3,4 +3,4 @@ kind: ServiceAccount
 metadata:
   name: amq-broker-operator
 secrets:
-  - name: amq-mqtt-mqtt-secret
+  - name: amq-mqtt-all-secret

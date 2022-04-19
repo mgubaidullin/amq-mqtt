@@ -13,9 +13,9 @@ public class MqttConsumerRoute extends EndpointRouteBuilder {
 
         Properties properties = new Properties();
         properties.setProperty("com.ibm.ssl.trustStore", "../../client.ts");
-        properties.setProperty("com.ibm.ssl.trustStorePassword", "123456");
+        properties.setProperty("com.ibm.ssl.trustStorePassword", "mypassword");
         properties.setProperty("com.ibm.ssl.keyStore", "../../client.ks");
-        properties.setProperty("com.ibm.ssl.keyStorePassword", "123456");
+        properties.setProperty("com.ibm.ssl.keyStorePassword", "mypassword");
 
         from(paho("reply.wc.{{pdt}}.route.{{pdt}}").cleanSession(true).sslClientProps(properties)).routeId("Consumer")
                 .log("${body}");

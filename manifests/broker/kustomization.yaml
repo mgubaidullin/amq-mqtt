@@ -7,4 +7,4 @@ resources:
   - amq-broker-sa.yaml
   - amq-broker.yaml
   - amq-topic.yaml
-  - amq-mqtt-mqtt-secret.yaml
+  - amq-mqtt-all-secret.yaml
