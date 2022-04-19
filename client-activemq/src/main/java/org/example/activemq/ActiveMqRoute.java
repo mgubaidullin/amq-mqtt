@@ -1,6 +1,7 @@
 package org.example.activemq;
 
 import org.apache.activemq.ActiveMQSslConnectionFactory;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -31,16 +32,15 @@ public class ActiveMqRoute extends EndpointRouteBuilder {
         cf.setKeyStore(keyStore);
         cf.setKeyStorePassword(keyStorePassword);
 
-        from(activemq("topic:goc_cpc.std.apps.dia.events.newstop.item.wc.*.route.*").connectionFactory(cf))
+        from(activemq("queue:goc_cpc.std.apps.dia.events.newstop.item.wc.*.route.*").connectionFactory(cf))
                 .routeId("ActiveMQ")
                 .log("${body}")
                 .process(e -> {
-                    ActiveMQTopic topic = e.getIn().getHeader("JMSDestination", ActiveMQTopic.class);
-                    e.getIn().setHeader("pdt", topic.getTopicName().split("\\.")[8]);
+                    ActiveMQQueue queue = e.getIn().getHeader("JMSDestination", ActiveMQQueue.class);
+                    e.getIn().setHeader("pdt", queue.getQueueName().split("\\.")[8]);
                 })
                 .setBody(simple("${body} ' + response'"))
-                .toD(activemq("topic:reply.wc.${header.pdt}.route.${header.pdt}").connectionFactory(cf))
-        ;
+                .toD(activemq("queue:reply.wc.${header.pdt}.route.${header.pdt}").connectionFactory(cf));
     }
 
 }
