@@ -1,4 +1,4 @@
-# AMQ Broker / MQTT / Camel-quarkus(JMS)
+# AMQ Broker / MQTT / Camel-Quarkus(JMS)
 
 ![architecture](arc.png)
 
