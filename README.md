@@ -1,12 +1,12 @@
-# AMQ Broker / MQTT / Fuse
+# AMQ Broker / MQTT / Camel-quarkus(JMS)
 
 ![architecture](arc.png)
 
-This has been tested on OpenShift 4.8, including Azure Red Hat OpenShift v4.8.
+This has been tested on OpenShift 4.9
 
 ## Install Operators
 
-First, install the AMQ Broker operator and OpenShift Pipelines operator.  You can do this through the OpenShift UI as an admin, or by executing the following command using the `oc` cli as a `cluster-admin`.
+First, install the AMQ Broker operator.  You can do this through the OpenShift UI as an admin, or by executing the following command using the `oc` cli as a `cluster-admin`.
 
 ```
 oc apply -k manifests/operators
@@ -32,12 +32,20 @@ Once the operator is installed and you have generated your certificates/secret, 
 oc apply -k manifests/broker
 ```
 
-## Build and Deploy Consumer Application
+## Build and Run MQTT Consumer and Producer Application
 
-Once the broker is up and running, you can build and deploy the "amq-mqtt" consumer application.
+Once the broker is up and running, you can build and run the "client-mqtt" application in dev mode.
 
 ```
-oc apply -k manifests/consumer
+cd client-mqtt
+mvn clean quarkus:dev -Dcamel.component.paho.broker-url=$YOUR_AMQ_ROUTE_URL
 ```
 
-This will kick off a small Tekton pipeline to build and deploy the app.
+## Build and Run JMS Consumer and Producer Application
+
+Once the broker is up and running, you can build and run the "client-activemq" application in dev mode.
+
+```
+cd client-activemq
+mvn clean quarkus:dev -Dcamel.component.activemq.broker-url=$YOUR_AMQ_ROUTE_URL
+```
